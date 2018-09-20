@@ -46,11 +46,13 @@ IB_DESIGNABLE
 @property (nonatomic) IBInspectable BOOL deselectAllOnEndEditing; // default is YES
 @property (nonatomic) IBInspectable BOOL scrollsHorizontally; // default is NO
 
+@property (nonatomic) IBInspectable CGFloat labelXOffset; // default is 0
 @property (nonatomic) IBInspectable CGFloat lineSpacing; // default is 2
 @property (nonatomic) IBInspectable CGFloat interitemSpacing; // default is 2
 @property (nonatomic) IBInspectable CGFloat tagButtonHeight; // default is auto
 @property (nonatomic) IBInspectable CGFloat textFieldHeight; // default is auto
 @property (nonatomic) RKTagsViewTextFieldAlign textFieldAlign; // default is center
+
 
 @property (nonatomic, strong) NSCharacterSet* deliminater; // defailt is [NSCharacterSet whitespaceCharacterSet]
 

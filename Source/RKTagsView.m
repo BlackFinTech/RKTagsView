@@ -85,6 +85,7 @@ const CGFloat RKTagsViewAutomaticDimension = -0.0001;
   _selectBeforeRemoveOnDeleteBackward = YES;
   _deselectAllOnEdit = YES;
   _deselectAllOnEndEditing = YES;
+  _labelXOffset = 0;
   _lineSpacing = 2;
   _interitemSpacing = 2;
   _tagButtonHeight = RKTagsViewAutomaticDimension;
@@ -372,6 +373,11 @@ const CGFloat RKTagsViewAutomaticDimension = -0.0001;
       tagButton.tag = DEFAULT_BUTTON_TAG;
     }
     [tagButton sizeToFit];
+    
+    CGRect frame = tagButton.frame;
+    CGRect adjustedFrame = CGRectMake(frame.origin.x, frame.origin.y, frame.size.width + self.labelXOffset, frame.size.height);
+    tagButton.frame = adjustedFrame;
+    
     tagButton.exclusiveTouch = YES;
     [tagButton addTarget:self action:@selector(tagButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.mutableTagButtons insertObject:tagButton atIndex:index];
