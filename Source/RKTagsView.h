@@ -71,6 +71,8 @@ IB_DESIGNABLE
 - (void)selectAll;
 - (void)deselectAll;
 
+- (void)clearText;
+
 @end
 
 NS_ASSUME_NONNULL_END

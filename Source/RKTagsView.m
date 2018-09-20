@@ -450,6 +450,11 @@ const CGFloat RKTagsViewAutomaticDimension = -0.0001;
   }
 }
 
+
+- (void)clearText {
+  self.inputTextField.text = @"";
+}
+
 #pragma mark Handlers
 
 - (void)inputTextFieldChanged {
