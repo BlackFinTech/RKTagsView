@@ -25,6 +25,9 @@ typedef NS_ENUM(NSInteger, RKTagsViewTextFieldAlign) { // align is relative to a
 - (void)tagsViewDidChange:(RKTagsView *)tagsView; // called when tag was added or removed by user
 - (void)tagsViewContentSizeDidChange:(RKTagsView *)tagsView;
 
+- (BOOL)tagsView:(RKTagsView *)tagsView shouldTriggerAddTagOnFocusWithExistingText:(NSString *)existingText; // called textfield inside is focused. return NO to do nothing. defaults to NO if method is not implemented
+- (BOOL)tagsView:(RKTagsView *)tagsView shouldTriggerAddTagOnLoseFocusWithExistingText:(NSString *)existingText; // called textfield inside lost focus. return NO to do nothing. defaults to YES if method is not implemented
+
 @end
 
 IB_DESIGNABLE
@@ -46,13 +49,13 @@ IB_DESIGNABLE
 @property (nonatomic) IBInspectable BOOL deselectAllOnEndEditing; // default is YES
 @property (nonatomic) IBInspectable BOOL scrollsHorizontally; // default is NO
 
-@property (nonatomic) IBInspectable CGFloat labelXOffset; // default is 0
 @property (nonatomic) IBInspectable CGFloat lineSpacing; // default is 2
 @property (nonatomic) IBInspectable CGFloat interitemSpacing; // default is 2
 @property (nonatomic) IBInspectable CGFloat tagButtonHeight; // default is auto
 @property (nonatomic) IBInspectable CGFloat textFieldHeight; // default is auto
 @property (nonatomic) RKTagsViewTextFieldAlign textFieldAlign; // default is center
 
+@property (nonatomic) IBInspectable CGFloat labelXOffset; // default is 0
 
 @property (nonatomic, strong) NSCharacterSet* deliminater; // defailt is [NSCharacterSet whitespaceCharacterSet]
 

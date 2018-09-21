@@ -85,7 +85,6 @@ const CGFloat RKTagsViewAutomaticDimension = -0.0001;
   _selectBeforeRemoveOnDeleteBackward = YES;
   _deselectAllOnEdit = YES;
   _deselectAllOnEndEditing = YES;
-  _labelXOffset = 0;
   _lineSpacing = 2;
   _interitemSpacing = 2;
   _tagButtonHeight = RKTagsViewAutomaticDimension;
@@ -93,6 +92,8 @@ const CGFloat RKTagsViewAutomaticDimension = -0.0001;
   _textFieldAlign = RKTagsViewTextFieldAlignCenter;
   _deliminater = [NSCharacterSet whitespaceCharacterSet];
   _scrollsHorizontally = NO;
+  
+  _labelXOffset = 0;
 }
 
 #pragma mark Layout
@@ -494,18 +495,33 @@ const CGFloat RKTagsViewAutomaticDimension = -0.0001;
 }
 
 - (void)inputTextFieldEditingDidBegin {
+  
+  BOOL shouldTriggerAddTagOnFocus = [self.delegate respondsToSelector:@selector(tagsView:shouldTriggerAddTagOnFocusWithExistingText:)] ?
+  [self.delegate tagsView:self shouldTriggerAddTagOnFocusWithExistingText:self.inputTextField.text] : NO;
+  
+  if (self.inputTextField.text.length > 0 && shouldTriggerAddTagOnFocus)
+    [self triggerAddTag];
+  
   self.becomeFirstResponderButton.hidden = YES;
 }
 
 - (void)inputTextFieldEditingDidEnd {
-  if (self.inputTextField.text.length > 0) {
-    self.inputTextField.text = [NSString stringWithFormat:@"%@ ", self.inputTextField.text];
-    [self inputTextFieldChanged];
-  }
+  
+  BOOL shouldTriggerAddTagOnLoseFocus = [self.delegate respondsToSelector:@selector(tagsView:shouldTriggerAddTagOnLoseFocusWithExistingText:)] ?
+  [self.delegate tagsView:self shouldTriggerAddTagOnLoseFocusWithExistingText:self.inputTextField.text] : YES;
+  
+  if (self.inputTextField.text.length > 0 && shouldTriggerAddTagOnLoseFocus)
+    [self triggerAddTag];
+  
   if (self.deselectAllOnEndEditing) {
     [self deselectAll];
   }
   self.becomeFirstResponderButton.hidden = !self.editable;
+}
+
+- (void)triggerAddTag {
+  self.inputTextField.text = [NSString stringWithFormat:@"%@ ", self.inputTextField.text];
+  [self inputTextFieldChanged];
 }
 
 - (BOOL)shouldInputTextDeleteBackward {
